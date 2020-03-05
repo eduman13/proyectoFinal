@@ -1,6 +1,7 @@
 import cv2 as cv
 import numpy as np
 import imutils
+import commons as c
 
 def findContorno(image):
 	# load the query image, compute the ratio of the old height
