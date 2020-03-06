@@ -5,7 +5,8 @@ import commons as c
 import contours
 
 if __name__ == "__main__":
-    img = cv.imread("./img/Perspectiva2.jpg")
+    img = cv.imread("./img/Perspectiva4.jpg")
     imgFront = h.homography(img)
     white_img = white.white_balance(imgFront)
-    contours.contours(white_img)
+    white_img = cv.resize(white_img, (2000, 3000))
+    contours.findColumns(white_img)

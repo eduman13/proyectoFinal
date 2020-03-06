@@ -2,32 +2,19 @@ import commons as c
 import cv2 as cv
 import imutils
 import numpy as np
+import matplotlib as plt
 
-def contours(image):
-    # load the query image, compute the ratio of the old height
-    # to the new height, clone it, and resize it
-    ratio = image.shape[0] / 600.0
-    image = imutils.resize(image, height=750)
+def findColumns(img):
+    ratio = img.shape[0] / 600.0
+    img = imutils.resize(img, height=600)
+    firstColumn = np.array([[[90, 105]], [[160, 105]], [[160, 585]], [[90, 585]]])
+    secondColumn = np.array([[[160, 105]], [[230, 105]], [[230, 585]], [[160, 585]]])
+    thirdColumn = np.array([[[230, 105]], [[300, 105]], [[300, 585]], [[230, 585]]])
+    fourColumn = np.array([[[300, 105]], [[370, 105]], [[370, 350]], [[300, 350]]])
+    fithColumn = np.array([[[300, 350]], [[370, 350]], [[370, 470]], [[300, 470]]])
+    columns = [firstColumn, secondColumn, thirdColumn, fourColumn, fithColumn]
+    for i, col in enumerate(columns):
+        col = col.flatten()
+        ROI = img[col[1]:col[5], col[0]:col[4]]
+        cv.imwrite(f"./columns/column_{i+1}.png", ROI)
 
-    # convert the image to grayscale, blur it, and find edges
-    # in the image
-    gray = cv.bilateralFilter(image, 4, 90, 90)
-    edged = cv.Canny(gray, 9, 30)
-
-    # find contours in the edged image, keep only the largest
-    # ones, and initialize our screen contour
-    cnts = cv.findContours(edged.copy(), cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
-    cnts = imutils.grab_contours(cnts)
-    cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:10]
-    screenCnt = None
-
-    # loop over our contours
-    for i in cnts:
-        # approximate the contour
-        peri = cv.arcLength(i, False)
-        approx = cv.approxPolyDP(i, peri, True)
-        # if our approximated contour has four points, then
-        # we can assume that we have found our screen
-        screenCnt = approx
-    c.showImage(edged)
-    #c.drawContornos(image, screenCnt)
