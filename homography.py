@@ -32,10 +32,13 @@ def findContorno(image):
 		if len(approx) == 4:
 			screenCnt = approx
 			break
+	#c.drawContornos(image, np.array([[[64, 31]], [[61, 531]], [[411, 542]], [[424, 39]]]))
+	#c.showImage(edged)
 	return screenCnt, ratio
 
-def homography(img):
-	screenCnt, ratio = findContorno(img)
+def homography(img, screenCnt=None, ratio=None, operation="screen"):
+	if operation == "screen":
+		screenCnt, ratio = findContorno(img)
 	pts = screenCnt.reshape(4, 2)
 	rect = np.zeros((4, 2), dtype="float32")
 	s = pts.sum(axis=1)

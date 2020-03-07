@@ -2,19 +2,22 @@ import commons as c
 import cv2 as cv
 import imutils
 import numpy as np
-import matplotlib as plt
+import homography as h
 
 def findColumns(img):
-    ratio = img.shape[0] / 600.0
-    img = imutils.resize(img, height=600)
-    firstColumn = np.array([[[90, 105]], [[160, 105]], [[160, 585]], [[90, 585]]])
-    secondColumn = np.array([[[160, 105]], [[230, 105]], [[230, 585]], [[160, 585]]])
-    thirdColumn = np.array([[[230, 105]], [[300, 105]], [[300, 585]], [[230, 585]]])
-    fourColumn = np.array([[[300, 105]], [[370, 105]], [[370, 350]], [[300, 350]]])
-    fithColumn = np.array([[[300, 350]], [[370, 350]], [[370, 470]], [[300, 470]]])
+    image = img.copy()
+    ratio = image.shape[0] / 600.0
+    image = imutils.resize(image, height=600)
+    firstColumn = np.array([[[80, 95]], [[80, 585]], [[170, 585]], [[170, 95]]])
+    secondColumn = np.array([[[150, 95]], [[150, 585]], [[240, 585]], [[240, 95]]])
+    thirdColumn = np.array([[[220, 95]], [[310, 95]], [[310, 585]], [[220, 585]]])
+    fourColumn = np.array([[[300, 95]], [[370, 95]], [[370, 350]], [[300, 350]]])
+    fithColumn = np.array([[[300, 350]], [[300, 470]], [[370, 470]], [[370, 350]]])
     columns = [firstColumn, secondColumn, thirdColumn, fourColumn, fithColumn]
+    for i in columns:
+        #c.rotate(image, i)
+        pass
     for i, col in enumerate(columns):
-        col = col.flatten()
-        ROI = img[col[1]:col[5], col[0]:col[4]]
-        cv.imwrite(f"./columns/column_{i+1}.png", ROI)
+        warp = h.homography(img, screenCnt=col, ratio=ratio, operation="columns")
+        cv.imwrite(f"./columns/column_{i+1}.jpg", warp)
 
