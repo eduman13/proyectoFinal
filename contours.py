@@ -14,9 +14,6 @@ def findColumns(img):
     fourColumn = np.array([[[300, 95]], [[370, 95]], [[370, 350]], [[300, 350]]])
     fithColumn = np.array([[[300, 350]], [[300, 470]], [[370, 470]], [[370, 350]]])
     columns = [firstColumn, secondColumn, thirdColumn, fourColumn, fithColumn]
-    for i in columns:
-        #c.rotate(image, i)
-        pass
     for i, col in enumerate(columns):
         warp = h.homography(img, screenCnt=col, ratio=ratio, operation="columns")
         cv.imwrite(f"./columns/column_{i+1}.jpg", warp)

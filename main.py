@@ -6,7 +6,7 @@ import contours
 import rows
 
 if __name__ == "__main__":
-    img = cv.imread("./img/Perspectiva4.jpg")
+    img = cv.imread("./img/Fotocopia.jpg")
     imgFront = h.homography(img)
     white_img = white.white_balance(imgFront)
     white_img = cv.resize(white_img, (2000, 3000))
