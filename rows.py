@@ -5,7 +5,7 @@ import numpy as np
 import homography as h
 
 def readColumns():
-    for i in range(1, 4):
+    for i in range(1, 6):
         img = cv.imread(f"./columns/column_{i}.jpg", 0)
         findContorno(img, i)
 
@@ -44,7 +44,12 @@ def findRows(img, n_column):
     th3 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 45, 1)
     cnts = cv.findContours(th3.copy(), cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
-    cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:51]
+    if n_column == 5:
+        cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:10]
+    if n_column == 4:
+        cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:25]
+    else:
+        cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:51]
     ROIs = []
     for con in cnts:
         contorno = sorted([e for i in con.tolist() for e in i], key=lambda x: sum(x), reverse=True)
@@ -52,7 +57,7 @@ def findRows(img, n_column):
         tl = (contorno[-1][0], contorno[-1][1])
         ROIs.append([br, tl])
     puntosOrdenados = sorted(ROIs, key=lambda x: x[0][0] + x[0][1] + x[1][0] + x[1][1])
-    contador = 1 if n_column == 1 else 51 if n_column == 2 else 101
+    contador = 1 if n_column == 1 else 51 if n_column == 2 else 101 if n_column == 3 else 151 if n_column == 4 else 176
     for pts in puntosOrdenados:
         ROI = img[pts[1][1]:pts[0][1], pts[1][0]:pts[0][0]]
         if ROI.shape[0] < 60:
