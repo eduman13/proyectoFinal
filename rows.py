@@ -38,10 +38,12 @@ def findContorno(img, n_column):
     maximoListaTrx = max(listaTrx)
     minimoListaTry = min(listaTry)
     tr = [maximoListaTrx, minimoListaTry]
+    #c.rotate(image, np.array([[tr]]))
     #tr = sorted([i for i, e in zip(contorno, listaTrx) if e == maximoListaTr], key=lambda x: x[1], reverse=False)[0]
     tl[1] = tr[1]
 
     warp = h.homography(img, screenCnt=np.array([[tl], [br], [bl], [tr]]), ratio=ratio, operation="filas")
+    #c.showSmallImage(warp)
     findRows(warp, n_column)
 
 def findRows(img, n_column):
@@ -55,6 +57,10 @@ def findRows(img, n_column):
     else:
         cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:51]
     ROIs = []
+    if n_column == 9:
+        print(cnts[3].shape)
+        c.rotate(img, cnts[4])
+        c.drawContornos(img, cnts[4])
     for con in cnts:
         contorno = sorted([e for i in con.tolist() for e in i], key=lambda x: sum(x), reverse=True)
         br = (contorno[0][0], contorno[0][1])
