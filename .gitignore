@@ -5,5 +5,5 @@ pyvenv.cfg
 .idea
 __pycache__
 share
-rows
-columns
+rows/*
+columns/*
