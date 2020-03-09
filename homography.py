@@ -34,6 +34,7 @@ def findContorno(image):
 			break
 	#c.drawContornos(image, np.array([[[64, 31]], [[61, 531]], [[411, 542]], [[424, 39]]]))
 	#c.showImage(edged)
+	#c.rotate(image, screenCnt)
 	return screenCnt, ratio
 
 def homography(img, screenCnt=None, ratio=None, operation="screen"):

@@ -20,7 +20,7 @@ def drawContornos(img, screenCnt):
     cv.waitKey(0)
 
 def rotate(img, screenCnt):
-    cv.drawContours(img, [screenCnt], -1, (0, 255, 0), 1)
+    cv.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
     cv.imshow("Game Boy Screen", img)
     cv.waitKey(0)
 

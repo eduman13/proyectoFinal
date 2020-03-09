@@ -16,6 +16,8 @@ def findContorno(img, n_column):
     cnts = cv.findContours(th3.copy(), cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
     cnts = sorted(cnts, key=cv.contourArea, reverse=True)[1]
+    #c.rotate(image, cnts)
+    #c.drawContornos(image, cnts)
     contorno = [e for i in cnts.tolist() for e in i]
     listaSuma = [sum(i) for i in contorno]
     #br
@@ -30,11 +32,13 @@ def findContorno(img, n_column):
     #tl
     minimoTl = min(listaSuma)
     tl = [e for i, e in zip(listaSuma, contorno) if i == minimoTl][0]
-
     #tr
-    listaTr = [i[1] for i in contorno]
-    minimoListaTr = min(listaTr)
-    tr = sorted([i for i, e in zip(contorno, listaTr) if e == minimoListaTr], key=lambda x: x[0], reverse=True)[0]
+    listaTrx = [i[0] for i in contorno if i[1] < 170]
+    listaTry = [i[1] for i in contorno]
+    maximoListaTrx = max(listaTrx)
+    minimoListaTry = min(listaTry)
+    tr = [maximoListaTrx, minimoListaTry]
+    #tr = sorted([i for i, e in zip(contorno, listaTrx) if e == maximoListaTr], key=lambda x: x[1], reverse=False)[0]
     tl[1] = tr[1]
 
     warp = h.homography(img, screenCnt=np.array([[tl], [br], [bl], [tr]]), ratio=ratio, operation="filas")
@@ -61,6 +65,7 @@ def findRows(img, n_column):
     for pts in puntosOrdenados:
         ROI = img[pts[1][1]:pts[0][1], pts[1][0]:pts[0][0]]
         if ROI.shape[0] < 60:
+            ROI = cv.resize(ROI, (125, 15))
             cv.imwrite(f"./rows/{contador}.jpg", ROI)
             contador += 1
             #img[tl[1]:br[1], tl[0]:br[0]]
