@@ -8,11 +8,8 @@ import answer as a
 import plantilla as pla
 
 def main(img):
-    #img = cv.imread("./img/Fotocopia.jpg")
-    #c.showAllImage(img)
+    #img = cv.imread("./img/Casa.jpg")
     imgFront = h.homography(img)
-    #c.showAllImage(imgFront)
-    #c.showSmallImage(imgFront)
     white_img = white.white_balance(imgFront)
     white_img = cv.resize(white_img, (2000, 3000))
     contours.findColumns(white_img)
@@ -30,4 +27,3 @@ def main(img):
         }
         exam.append(respuestas)
     return exam
-

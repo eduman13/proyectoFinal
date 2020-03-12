@@ -11,8 +11,8 @@ def findColumns(img):
     firstColumn = np.array([[[80, 95]], [[80, 585]], [[170, 585]], [[170, 95]]])
     secondColumn = np.array([[[150, 95]], [[150, 585]], [[240, 585]], [[240, 95]]])
     thirdColumn = np.array([[[220, 95]], [[310, 95]], [[310, 585]], [[220, 585]]])
-    fourColumn = np.array([[[300, 95]], [[370, 95]], [[370, 350]], [[300, 350]]])
-    fithColumn = np.array([[[300, 350]], [[300, 470]], [[370, 470]], [[370, 350]]])
+    fourColumn = np.array([[[300, 95]], [[380, 95]], [[380, 350]], [[300, 350]]])
+    fithColumn = np.array([[[300, 350]], [[300, 470]], [[380, 470]], [[380, 350]]])
     columns = [firstColumn, secondColumn, thirdColumn, fourColumn, fithColumn]
     for i, col in enumerate(columns):
         warp = h.homography(img, screenCnt=col, ratio=ratio, operation="columns")
