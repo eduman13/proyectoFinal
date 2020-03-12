@@ -11,4 +11,3 @@ for dir, name, files in os.walk(path):
             if "rename" not in dstFolder:
                 os.rename(f"{currentFolder}\\data\\{dir.split('/')[-1]}\\{i}", f"{currentFolder}\\data\\x_{dstFolder}_rename\\{contador}.jpg")
                 contador += 1
-

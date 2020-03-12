@@ -47,7 +47,7 @@ def findContorno(img, n_column):
     findRows(warp, n_column)
 
 def findRows(img, n_column):
-    th3 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 45, 1)
+    th3 = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 45, -3)
     cnts = cv.findContours(th3.copy(), cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
     if n_column == 5:
@@ -58,9 +58,9 @@ def findRows(img, n_column):
         cnts = sorted(cnts, key=cv.contourArea, reverse=True)[:51]
     ROIs = []
     if n_column == 9:
-        print(cnts[3].shape)
-        c.rotate(img, cnts[4])
-        c.drawContornos(img, cnts[4])
+        for i in cnts:
+            print(i.shape)
+            c.rotate(img, i)
     for con in cnts:
         contorno = sorted([e for i in con.tolist() for e in i], key=lambda x: sum(x), reverse=True)
         br = (contorno[0][0], contorno[0][1])
@@ -74,19 +74,3 @@ def findRows(img, n_column):
             ROI = cv.resize(ROI, (125, 15))
             cv.imwrite(f"./rows/{contador}.jpg", ROI)
             contador += 1
-            #img[tl[1]:br[1], tl[0]:br[0]]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

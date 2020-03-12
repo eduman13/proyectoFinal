@@ -1,6 +1,6 @@
 import cv2 as cv
 
-def showImage(img):
+def showAllImage(img):
     cv.namedWindow('image', cv.WINDOW_NORMAL)
     cv.imshow("image", img)
     cv.waitKey(0)
@@ -14,17 +14,17 @@ def showSmallImage(img):
 def drawContornos(img, screenCnt):
     cv.namedWindow('image', cv.WINDOW_NORMAL)
     cv.drawContours(img, [screenCnt], -1, (0, 255, 0), 1)
-    cv.imshow("Game Boy Screen", img)
-    img = cv.rotate(img, cv.ROTATE_180)
-    cv.imshow("Game Boy Screen", img)
+    cv.imshow("image", img)
     cv.waitKey(0)
 
-def rotate(img, screenCnt):
+def drawContornosRotate(img, screenCnt):
+    cv.namedWindow('image', cv.WINDOW_NORMAL)
     cv.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
-    cv.imshow("Game Boy Screen", img)
+    img = cv.rotate(img, cv.ROTATE_180)
+    cv.imshow("image", img)
     cv.waitKey(0)
 
-def drawTh(img, screenCnt):
+def drawThList(img, screenCnt):
     cv.drawContours(img, screenCnt, -1, (255, 255, 255), 1)
     cv.imshow("Contour", img)
     cv.waitKey(0)

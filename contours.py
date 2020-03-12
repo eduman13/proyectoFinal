@@ -17,4 +17,3 @@ def findColumns(img):
     for i, col in enumerate(columns):
         warp = h.homography(img, screenCnt=col, ratio=ratio, operation="columns")
         cv.imwrite(f"./columns/column_{i+1}.jpg", warp)
-

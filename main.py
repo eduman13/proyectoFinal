@@ -7,18 +7,27 @@ import rows
 import answer as a
 import plantilla as pla
 
-if __name__ == "__main__":
-    img = cv.imread("./img/Perspectiva4.jpg")
+def main(img):
+    #img = cv.imread("./img/Fotocopia.jpg")
+    #c.showAllImage(img)
     imgFront = h.homography(img)
+    #c.showAllImage(imgFront)
+    #c.showSmallImage(imgFront)
     white_img = white.white_balance(imgFront)
     white_img = cv.resize(white_img, (2000, 3000))
     contours.findColumns(white_img)
     rows.readColumns()
     solutions = a.answer()
     plantilla = pla.plantilla()
+    exam = []
     for i in range(1, 186):
         answerUser = solutions.get(str(i))
         answerReal = plantilla.get(str(i))
-        print(f"Pregunta {i}: {'Acierto' if answerUser == answerReal else 'Fallo'}")
-
+        respuestas = {
+            f"Pregunta_{i}": "Acierto" if answerUser == answerReal else "Fallo",
+            "Respuesta_Usuario": answerUser,
+            "Respuesta_Correcta": answerReal
+        }
+        exam.append(respuestas)
+    return exam
 

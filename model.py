@@ -10,8 +10,6 @@ from keras.layers import Dense, Dropout, Flatten
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 import commons as c
-import matplotlib.pyplot as plt
-from PIL import Image
 
 def readImages(dir):
     imagenes = [cv.imread(f"{path}/{dir}/{i}.jpg", 0).flatten() for i in range(1, 121)]
@@ -103,18 +101,4 @@ score = model.evaluate(X_test, y_test, verbose=0)
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
 
-img = X_test[0]
-imagenes = cv.imread("./rows/162.jpg", 0)
-imagenes = imagenes.reshape(15, 125, 1)
-pred = model.predict(np.expand_dims(img, axis=0))[0]
-print("Probs -> zero:{0:.5f}, one:{1:.5f}, two:{2:.5f}, three:{3:.5f}, four:{4:.5f}".format(pred[0], pred[1], pred[2], pred[3], pred[4]))
-predicciones = pred.tolist()
-print(f"{predicciones.index(max(predicciones))}")
-plt.imshow(Image.fromarray(img.squeeze()*255),'gray')
 model.save("model.h5")
-
-
-
-
-
-

@@ -38,9 +38,3 @@ def answer():
     solutions = solution(imagenes)
     result = {f"{i+1}": sol for i, sol in enumerate(solutions)}
     return result
-
-
-
-
-
-
