@@ -48,7 +48,7 @@ three = df3.values.reshape((img_rows, img_cols, num_3))
 four = df4.values.reshape((img_rows, img_cols, num_4))
 X = np.concatenate((zero, one, two, three, four), axis=2).swapaxes(2,0)
 y = np.concatenate((np.zeros(num_0), np.ones(num_1), np.full(num_2, 2).astype("float64"), np.full(num_3, 3).astype("float64"), np.full(num_4, 4).astype("float64")))
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
 
 num_classes = 5
 
